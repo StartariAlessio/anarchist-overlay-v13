@@ -1,3 +1,18 @@
+// Hide Foundry chrome without Application.close() — restored when overlay ends.
+body.anarchist-hide-ui {
+  #interface,
+  #sidebar,
+  #hotbar,
+  #controls,
+  #navigation,
+  #players,
+  #pause,
+  #notifications {
+    visibility: hidden !important;
+    pointer-events: none !important;
+  }
+}
+
 .anarchist-overlay {
   position: fixed;
   height: 100vh;
@@ -7,9 +22,7 @@
   transition: opacity 2s;
   pointer-events: none;
 
-  &.above-ui {
-    z-index: 200;
-  }
+  // z-index for .above-ui is set in JS (ApplicationV2.maxZ + 1)
   &.fade-out {
     opacity: 0;
   }

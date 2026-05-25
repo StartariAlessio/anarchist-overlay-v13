@@ -27,10 +27,7 @@ export default defineConfig({
       watch: ['src/styles/*.scss'],
     }),
     copy({
-      targets: [
-        { src: 'src/languages', dest: 'dist' },
-        { src: 'src/templates', dest: 'dist' },
-      ],
+      targets: [{ src: 'src/templates', dest: 'dist' }],
       hook: 'writeBundle',
     }),
   ],

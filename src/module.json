@@ -1,16 +1,34 @@
 {
-  "name": "anarchist-overlay",
+  "id": "anarchist-overlay",
   "title": "Anarchist Overlay",
   "description": "Fancy overlay stuff",
-  "version": "0.2.0",
-  "minimumCoreVersion" : "9",
-  "compatibleCoreVersion" : "10",
+  "version": "1.0.0",
+  "compatibility": {
+    "minimum": 13,
+    "verified": "13.341",
+    "maximum": 13
+  },
+  "authors": [
+    {
+      "name": "reynevan24",
+      "url": "https://github.com/reynevan24/anarchist-overlay"
+    }
+  ],
+  "url": "https://github.com/reynevan24/anarchist-overlay",
   "library": true,
-  "styles": ["style.css"],
-  "esmodules": ["scripts/module.js"],
   "socket": true,
-  "dependencies": [{
-    "name": "socketlib",
-    "type": "module"
-  }]
+  "esmodules": ["scripts/module.js"],
+  "styles": ["style.css"],
+  "relationships": {
+    "requires": [
+      {
+        "id": "socketlib",
+        "type": "module",
+        "manifest": "https://github.com/farling42/foundryvtt-socketlib/releases/latest/download/module.json",
+        "compatibility": {
+          "minimum": "1.1.3"
+        }
+      }
+    ]
+  }
 }

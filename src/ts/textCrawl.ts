@@ -14,18 +14,22 @@ type NormalizedConfig = Required<TextCrawlConfig>;
 
 export const createTextCrawlHtml = async (config: TextCrawlConfig) => {
   const normalizedConfig = normalizeConfig(config);
-  return await renderTemplate(`modules/${moduleId}/templates/text-crawl.hbs`, {
-    ...normalizedConfig,
-    lines: normalizedConfig.lines.map((line, index) => ({
-      ...line,
-      typingTime: normalizedConfig.typingTime,
-      textLength: line.text.length,
-      cursorDelay: (normalizedConfig.typingTime + normalizedConfig.delay) * 2,
-      startDelay: (normalizedConfig.delay + normalizedConfig.typingTime) * index,
-      glitchEffect: normalizedConfig.glitchEffect
-    }))
-  });
-}
+  return await foundry.applications.handlebars.renderTemplate(
+    `modules/${moduleId}/templates/text-crawl.hbs`,
+    {
+      ...normalizedConfig,
+      lines: normalizedConfig.lines.map((line, index) => ({
+        ...line,
+        typingTime: normalizedConfig.typingTime,
+        textLength: line.text.length,
+        cursorDelay: (normalizedConfig.typingTime + normalizedConfig.delay) * 2,
+        startDelay:
+          (normalizedConfig.delay + normalizedConfig.typingTime) * index,
+        glitchEffect: normalizedConfig.glitchEffect,
+      })),
+    }
+  );
+};
 
 
 const normalizeConfig = (config: TextCrawlConfig): NormalizedConfig => {

@@ -1,6 +1,6 @@
 {
   "name": "foundry-module-ts",
-  "version": "0.2.0",
+  "version": "1.0.0",
   "description": "A template project for FoundryVTT modules using Typescript",
   "license": "MIT",
   "private": true,
@@ -9,11 +9,11 @@
     "watch": "tsc && vite build --watch"
   },
   "devDependencies": {
-    "@league-of-foundry-developers/foundry-vtt-types": "^9.280.0",
+    "fvtt-types": "npm:@league-of-foundry-developers/foundry-vtt-types@13.346.0-beta.20251209192131",
     "rollup-plugin-copy": "^3.4.0",
     "rollup-plugin-scss": "^3.0.0",
     "sass": "^1.54.8",
-    "typescript": "^4.8.2",
+    "typescript": "^5.4.0",
     "vite": "^4.3.0"
   }
 }
