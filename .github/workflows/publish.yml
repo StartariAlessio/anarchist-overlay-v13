@@ -31,6 +31,9 @@ jobs:
           GH_TAG: ${{github.event.release.tag_name}}
         run: yarn build
 
+      - name: Verify release manifest
+        run: jq -e '.download and .manifest' dist/module.json
+
       - name: Create zip archive
         working-directory: dist
         run: zip -r ./module.zip module.json style.css scripts/ templates/

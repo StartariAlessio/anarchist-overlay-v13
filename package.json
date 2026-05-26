@@ -1,12 +1,19 @@
 {
   "name": "foundry-module-ts",
-  "version": "1.0.0",
+  "version": "1.0.3",
   "description": "A template project for FoundryVTT modules using Typescript",
   "license": "MIT",
   "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/StartariAlessio/anarchist-overlay-v13.git"
+  },
+  "homepage": "https://github.com/StartariAlessio/anarchist-overlay-v13",
   "scripts": {
     "build": "tsc && vite build",
-    "watch": "tsc && vite build --watch"
+    "watch": "tsc && vite build --watch",
+    "zip": "node scripts/zip-release.mjs",
+    "build:release": "npm run build && npm run zip"
   },
   "devDependencies": {
     "fvtt-types": "npm:@league-of-foundry-developers/foundry-vtt-types@13.346.0-beta.20251209192131",

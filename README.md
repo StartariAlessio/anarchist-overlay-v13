@@ -9,10 +9,13 @@ Module for the Foundry VTT, allowing to render arbitrary HTML in a configurable 
 
 ## Installation
 
-Install using a manifest link:
+In Foundry setup, install from this manifest URL (must be the **release** manifest, not a raw GitHub file from the repo root):
+
 ```
-https://github.com/reynevan24/anarchist-overlay/releases/latest/download/module.json
+https://github.com/StartariAlessio/anarchist-overlay-v13/releases/latest/download/module.json
 ```
+
+Foundry requires a `download` field in that manifest pointing to `module.zip` on the same release. If you see *"does not provide a download URL"*, the release assets are wrong — see [RELEASING.md](RELEASING.md).
 
 ## Example usage:
 

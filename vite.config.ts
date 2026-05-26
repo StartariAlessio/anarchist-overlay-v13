@@ -39,8 +39,15 @@ function updateModuleManifestPlugin(): Plugin {
     async writeBundle(): Promise<void> {
       const packageContents = JSON.parse(
         await fsPromises.readFile('./package.json', 'utf-8')
-      ) as Record<string, unknown>;
-      const version = moduleVersion || (packageContents.version as string);
+      ) as {
+        version?: string;
+        repository?: string | { url?: string };
+      };
+
+      const version = moduleVersion || packageContents.version || '0.0.0';
+      const project = githubProject ?? parseGithubProject(packageContents.repository);
+      const tag = githubTag ?? `v${version}`;
+
       const manifestContents: string = await fsPromises.readFile(
         'src/module.json',
         'utf-8'
@@ -49,20 +56,31 @@ function updateModuleManifestPlugin(): Plugin {
         string,
         unknown
       >;
+
       manifestJson['version'] = version;
-      if (githubProject) {
-        const baseUrl = `https://github.com/${githubProject}/releases`;
+
+      if (project) {
+        const baseUrl = `https://github.com/${project}/releases`;
         manifestJson['manifest'] = `${baseUrl}/latest/download/module.json`;
-        if (githubTag) {
-          manifestJson[
-            'download'
-          ] = `${baseUrl}/download/${githubTag}/module.zip`;
-        }
+        manifestJson['download'] = `${baseUrl}/download/${tag}/module.zip`;
       }
+
       await fsPromises.writeFile(
         'dist/module.json',
         JSON.stringify(manifestJson, null, 4)
       );
     },
   };
+}
+
+function parseGithubProject(
+  repository: string | { url?: string } | undefined
+): string | undefined {
+  if (!repository) return undefined;
+
+  const url = typeof repository === 'string' ? repository : repository.url;
+  if (!url) return undefined;
+
+  const match = url.match(/github\.com[/:]([^/]+\/[^/.]+)/i);
+  return match?.[1]?.replace(/\.git$/, '');
 }

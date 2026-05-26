@@ -14,8 +14,8 @@
       "url": "https://github.com/reynevan24/anarchist-overlay"
     }
   ],
-  "url": "https://github.com/reynevan24/anarchist-overlay",
-  "library": true,
+  "url": "https://github.com/StartariAlessio/anarchist-overlay-v13",
+  "manifest": "https://github.com/StartariAlessio/anarchist-overlay-v13/releases/latest/download/module.json",
   "socket": true,
   "esmodules": ["scripts/module.js"],
   "styles": ["style.css"],
