@@ -1,6 +1,7 @@
 import { execSync } from 'node:child_process';
-import { existsSync, readFileSync } from 'node:fs';
+import { existsSync, readFileSync, rmSync } from 'node:fs';
 import { join } from 'node:path';
+import { platform } from 'node:os';
 
 const dist = 'dist';
 const required = ['module.json', 'style.css', join('scripts', 'module.js'), 'templates'];
@@ -24,13 +25,23 @@ if (!manifest.download) {
 const zipPath = join(dist, 'module.zip');
 const files = ['module.json', 'style.css', 'scripts', 'templates'];
 
-try {
-  execSync(`zip -r "${zipPath}" ${files.join(' ')}`, { cwd: dist, stdio: 'inherit' });
-} catch {
-  console.error(
-    'zip command failed. On Windows, install zip (e.g. via Git for Windows) or create module.zip manually from dist/ contents.'
+if (existsSync(zipPath)) rmSync(zipPath);
+
+if (platform() === 'win32') {
+  const psFiles = files.map((f) => `'${f}'`).join(',');
+  execSync(
+    `powershell -NoProfile -Command "Compress-Archive -Path ${psFiles} -DestinationPath 'module.zip' -Force"`,
+    { cwd: dist, stdio: 'inherit' }
   );
-  process.exit(1);
+} else {
+  try {
+    execSync(`zip -r "${zipPath}" ${files.join(' ')}`, { cwd: dist, stdio: 'inherit' });
+  } catch {
+    console.error(
+      'zip command failed. Install zip or run this script on Windows (uses Compress-Archive).'
+    );
+    process.exit(1);
+  }
 }
 
 console.log(`Created ${zipPath}`);
